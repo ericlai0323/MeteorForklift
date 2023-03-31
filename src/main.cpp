@@ -11,6 +11,7 @@ int main(int argc, char **argv)
     STM32Controller STM32Controller;
     // Subscriber
     ros::Subscriber SubCommandVelocity = n.subscribe("cmd_vel", 200, &ROSCommunication::CommandVelocityCallBack, &ROSCommunication); // Subcribe teleop_twist_keyboard
+    ros::Subscriber SubForkMotion = n.subscribe("ForkUpDown",100, &ROSCommunication::ForkMotionCallBack, &ROSCommunication);
 
     // Publisher
     ros::Publisher PubOdom = n.advertise<nav_msgs::Odometry>("wheel_odom", 50);

@@ -22,17 +22,28 @@ void ROSCommunication::CommandVelocityCallBack(const geometry_msgs::Twist &msg)
     WheelAngle = fabs(WheelAngle) > 90 ? SignNumber(WheelAngle) * 90 : WheelAngle;
     WheelSpeed = fabs(WheelSpeed) > 0.8 ? SignNumber(WheelSpeed) * 0.8 : WheelSpeed;
 
-    // // stop
-    // if (CommandVelocity.linear.x || CommandVelocity.angular.z || CommandVelocity.angular.y)
-    // {
-    //     i
-    //         Flag_start = 1;
-    // }
-    // else
-    // {
-    //     Flag_start = 0;
-    //     WheelSpeed = WheelAngle = motor_Fork = 0.0;
-    // }
+    if (CommandVelocity.linear.x == 0 && CommandVelocity.angular.z == 0)
+    {
+        WheelAngle = 0;
+        WheelSpeed = 0;
+    }
+}
+
+void ROSCommunication::ForkMotionCallBack(const std_msgs::Float32 &msg)
+{
+    ForkMotion = msg;
+    if (ForkMotion > 0.0)
+    {
+        ForkMotor = -2000;
+    }
+    else if (ForkMotion < 0.0)
+    {
+        ForkMotor = 1700;
+    }
+    else
+    {
+        ForkMotor = 0;
+    }
 }
 int ROSCommunication::SignNumber(float Number)
 {
