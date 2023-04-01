@@ -7,11 +7,11 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
     ros::NodeHandle nh_priv("~");
 
-    ROSCommunication ROSCommunication;
-    STM32Controller STM32Controller;
+    ROSCommunication ROSCommunicationObject;
+    STM32Controller STM32ControllerObject;
     // Subscriber
-    ros::Subscriber SubCommandVelocity = n.subscribe("cmd_vel", 200, &ROSCommunication::CommandVelocityCallBack, &ROSCommunication); // Subcribe teleop_twist_keyboard
-    ros::Subscriber SubForkMotion = n.subscribe("ForkUpDown",100, &ROSCommunication::ForkMotionCallBack, &ROSCommunication);
+    ros::Subscriber SubCommandVelocity = n.subscribe("cmd_vel", 200, &ROSCommunication::CommandVelocityCallBack, &ROSCommunicationObject); // Subcribe teleop_twist_keyboard
+    ros::Subscriber SubForkMotion = n.subscribe("ForkUpDown",100, &ROSCommunication::ForkMotionCallBack, &ROSCommunicationObject);
 
     // Publisher
     ros::Publisher PubOdom = n.advertise<nav_msgs::Odometry>("wheel_odom", 50);

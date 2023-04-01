@@ -1,1 +1,1 @@
-float64 updownposition
+float32 updownposition

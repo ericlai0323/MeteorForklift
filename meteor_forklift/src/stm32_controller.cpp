@@ -136,3 +136,58 @@ float STM32Controller::BinaryToFloat(byte m0, byte m1, byte m2, byte m3)
 
     return f;
 }
+
+size_t STM32Controller::GetBufferSize()
+{
+    return SerialPort.available();
+}
+
+void STM32Controller::ReadBufferData(uint8_t Buffer[], size_t N)
+{
+    SerialPort.read(Buffer, N);
+}
+
+
+int STM32Controller::SetSerialPort()
+{
+    serial::Timeout TimeOut = serial::Timeout::simpleTimeout(100); // Create timeout
+
+    SerialPort.setPort("/dev/ttyUSB0"); // Set the name of the serial port to open
+    SerialPort.setBaudrate(115200);     // Set the baud rate of serial communication
+    SerialPort.setTimeout(TimeOut);          // Serial set timeout
+
+    try // Open serial port
+    {
+        SerialPort.open();
+    }
+    catch (serial::IOException &e)
+    {
+        printf("Unable to open port");
+        printf("$ sudo chmod 777 /dev/ttyUSB0");
+
+        return -1;
+    }
+
+    if (SerialPort.isOpen())
+    {
+        printf("/dev/ttyUSB0 is opened");
+    }
+    else
+    {
+        printf("$ sudo chmod 777 /dev/ttyUSB0");
+        return -1;
+    }
+}
+
+void STM32Controller::ClearBuffer()
+{
+    for (uint8_t j = 0; j < 3; j++)
+    {
+        STM32Controller::SendData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    }
+}
+
+void STM32Controller::CloseBuffer()
+{
+    SerialPort.close();
+}

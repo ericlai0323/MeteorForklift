@@ -29,10 +29,10 @@ void ROSCommunication::CommandVelocityCallBack(const geometry_msgs::Twist &msg)
     }
 }
 
-void ROSCommunication::ForkMotionCallBack(const forkmotion.msg::int &msg)
+void ROSCommunication::ForkMotionCallBack(const fork_msg::forkmotion &msg)
 {
-    ForkMotion = msg;
-    switch (ForkMotion)
+    int ForkControl = msg.forkmotion;
+    switch (ForkControl)
     {
     case 1:
         ForkMotor = 0;
@@ -63,3 +63,10 @@ int ROSCommunication::SignNumber(float Number)
         return 0;
     }
 }
+
+// void ROSCommunication::PublishOdomTopic()
+// {
+//     Odom.header.stamp = ros::Time::now();
+//     Odom.header.frame_id = "wheel_odom";
+//     Odom.pose.pose.position.x 
+// }

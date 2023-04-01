@@ -22,6 +22,7 @@ catkin_package(
   nav_msgs
   serial 
   tf 
+  fork_msg
 )
 
 include_directories(

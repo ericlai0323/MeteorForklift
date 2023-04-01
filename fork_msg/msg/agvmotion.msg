@@ -1,2 +1,2 @@
-float64 wheelvelocity
-float64 wheelangle
+float32 wheelvelocity
+float32 wheelangle
