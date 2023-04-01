@@ -29,20 +29,23 @@ void ROSCommunication::CommandVelocityCallBack(const geometry_msgs::Twist &msg)
     }
 }
 
-void ROSCommunication::ForkMotionCallBack(const std_msgs::Float32 &msg)
+void ROSCommunication::ForkMotionCallBack(const forkmotion.msg::int &msg)
 {
     ForkMotion = msg;
-    if (ForkMotion > 0.0)
+    switch (ForkMotion)
     {
-        ForkMotor = -2000;
-    }
-    else if (ForkMotion < 0.0)
-    {
-        ForkMotor = 1700;
-    }
-    else
-    {
+    case 1:
         ForkMotor = 0;
+        break;
+    case 2:
+        ForkMotor = -2000;
+        break;
+    case 3:
+        ForkMotor = 1700;
+        break;
+    default:
+        ForkMotor = 0;
+        break;
     }
 }
 int ROSCommunication::SignNumber(float Number)

@@ -13,6 +13,8 @@
 #include <nav_msgs/Odometry.h>
 #include <tf/transform_broadcaster.h>
 #include <sensor_msgs/Imu.h>
+#include "fork_msg/forkmotion.h"
+#include "fork_msg/forkposition.h"
 
 class ROSCommunication
 {
@@ -20,7 +22,7 @@ private:
     float WheelSpeed, WheelAngle, WheelBase, ForkMotor;
     float AngularVelocityX, AngularVelocityY, AngularVelocityZ;
     geometry_msgs::Twist CommandVelocity;
-    std_msgs::Float32 ForkMotion;
+    forkmotion.msg::int ForkMotion;
 
     sensor_msgs::Imu IMUData;
     geometry_msgs::TransformStamped OdomTFStamp, ForkTFStamp;
@@ -28,12 +30,15 @@ private:
 
 public:
     void GetLaunchParameter();
+    void Initial();
     void CommandVelocityCallBack(const geometry_msgs::Twist &msg);
-    void ForkMotionCallBack(const std_msgs::Float32 &msg);
+    void ForkMotionCallBack(const forkmotion.msg::int &msg);
     void PublishOdomTopic();
     void PublishOdomTF();
     void PublishIMUTopic();
     void PublishIMUTF();
+    void PublishForkTopic();
+    void PublishForkTF();
     int StateDectect();
     int SignNumber(float Number);
 };
