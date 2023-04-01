@@ -25,5 +25,9 @@
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>serial</exec_depend>
   <exec_depend>tf</exec_depend>
+  <build_depend>fork_msg</build_depend>
+  <build_export_depend>fork_msg</build_export_depend>
+  <exec_depend>fork_msg</exec_depend>
+
 
 </package>

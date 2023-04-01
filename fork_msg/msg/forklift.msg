@@ -1,4 +1,4 @@
-int  forkmotion
+int64  forkmotion
 
 #1  停止
 #2  上升

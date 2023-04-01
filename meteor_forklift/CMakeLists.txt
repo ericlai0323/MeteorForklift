@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   serial 
   tf 
+  fork_msg
 )
 
 catkin_package(
