@@ -21,7 +21,6 @@ class ROSCommunication
 {
 private:
     float WheelSpeed, WheelAngle, WheelBase, ForkMotor;
-    float AngularVelocityX, AngularVelocityY, AngularVelocityZ;
     
     fork_msg::forkmotion ForkMotion;
     nav_msgs::Odometry Odom;
