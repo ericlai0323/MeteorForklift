@@ -3,7 +3,6 @@
 #include <serial/serial.h>
 #include <iostream>
 #include <math.h>
-#include <stm32_controller.hpp>
 
 class STM32Controller
 {

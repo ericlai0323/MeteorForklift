@@ -1,4 +1,4 @@
-#include <ros_communication.hpp>
+#include <ros_communication.h>
 
 void ROSCommunication::CommandVelocityCallBack(const geometry_msgs::Twist &msg)
 {

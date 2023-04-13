@@ -1,5 +1,5 @@
-#include <ros_communication.hpp>
-#include <stm32_controller.hpp>
+#include <ros_communication.h>
+#include <stm32_controller.h>
 
 int main(int argc, char **argv)
 {

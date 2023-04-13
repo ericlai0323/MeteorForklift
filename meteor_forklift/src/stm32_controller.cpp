@@ -1,4 +1,4 @@
-#include <stm32_controller.hpp>
+#include <stm32_controller.h>
 
 void STM32Controller::SendData(float data1, float data2, float data3, float data4, float data5, float data6, float data7, float data8, float data9, float data10, float data11, float data12)
 {
@@ -169,6 +169,7 @@ int STM32Controller::SetSerialPort()
     if (SerialPort.isOpen())
     {
         printf("/dev/ttyUSB0 is opened");
+        return 0;
     }
     else
     {
@@ -181,7 +182,7 @@ void STM32Controller::ClearBuffer()
 {
     for (uint8_t j = 0; j < 3; j++)
     {
-        STM32Controller::SendData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        SendData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 }
 
@@ -208,21 +209,21 @@ void STM32Controller::ReciveData()
 
             if (sum == Buffer[64])
             {
-                Data[1] = STM32Controller::BinaryToFloat(Buffer[4], Buffer[5], Buffer[6], Buffer[7]);      // 電機啟動停止控制位元（1/0 啟動/停止）
-                Data[2] = STM32Controller::BinaryToFloat(Buffer[8], Buffer[9], Buffer[10], Buffer[11]);    // 前輪線速度
-                Data[3] = STM32Controller::BinaryToFloat(Buffer[12], Buffer[13], Buffer[14], Buffer[15]);  // 前輪轉角
-                Data[4] = STM32Controller::BinaryToFloat(Buffer[16], Buffer[17], Buffer[18], Buffer[19]);  // 繞X軸角速度 gyro_Roll 原始数值
-                Data[5] = STM32Controller::BinaryToFloat(Buffer[20], Buffer[21], Buffer[22], Buffer[23]);  // 繞Y軸角速度 gyro_Pitch 原始数值
-                Data[6] = STM32Controller::BinaryToFloat(Buffer[24], Buffer[25], Buffer[26], Buffer[27]);  // 繞Z軸角速度 gyro_Yaw 原始数值
-                Data[7] = STM32Controller::BinaryToFloat(Buffer[28], Buffer[29], Buffer[30], Buffer[31]);  // X軸加速度 accel_x 原始数值
-                Data[8] = STM32Controller::BinaryToFloat(Buffer[32], Buffer[33], Buffer[34], Buffer[35]);  // Y軸加速度 accel_y 原始数值
-                Data[9] = STM32Controller::BinaryToFloat(Buffer[36], Buffer[37], Buffer[38], Buffer[39]);  // Z軸加速度 accel_z 原始数值
-                Data[10] = STM32Controller::BinaryToFloat(Buffer[40], Buffer[41], Buffer[42], Buffer[43]); // Yaw Z轴角度
-                Data[11] = STM32Controller::BinaryToFloat(Buffer[44], Buffer[45], Buffer[46], Buffer[47]); // 電池電壓              24-25   <24.3  low
-                Data[12] = STM32Controller::BinaryToFloat(Buffer[48], Buffer[49], Buffer[50], Buffer[51]); // 紅色緊急開關位元0/1 運行/停止
-                Data[13] = STM32Controller::BinaryToFloat(Buffer[52], Buffer[53], Buffer[54], Buffer[55]); // 起重電機編碼器原始數據（未轉換） 如果有需要可以添加發送指令去清0，上面的發送命令還有剩餘  gearrate 30  dt 5 ms
-                Data[14] = STM32Controller::BinaryToFloat(Buffer[56], Buffer[57], Buffer[58], Buffer[59]); // 起重電機下行限位開關（用於校準） 1代表開關被壓住
-                Data[15] = STM32Controller::BinaryToFloat(Buffer[60], Buffer[61], Buffer[62], Buffer[63]); // 起重電機上行限位開關（用於校準） 1代表開關被壓住
+                Data[1] = BinaryToFloat(Buffer[4], Buffer[5], Buffer[6], Buffer[7]);      // 電機啟動停止控制位元（1/0 啟動/停止）
+                Data[2] = BinaryToFloat(Buffer[8], Buffer[9], Buffer[10], Buffer[11]);    // 前輪線速度
+                Data[3] = BinaryToFloat(Buffer[12], Buffer[13], Buffer[14], Buffer[15]);  // 前輪轉角
+                Data[4] = BinaryToFloat(Buffer[16], Buffer[17], Buffer[18], Buffer[19]);  // 繞X軸角速度 gyro_Roll 原始数值
+                Data[5] = BinaryToFloat(Buffer[20], Buffer[21], Buffer[22], Buffer[23]);  // 繞Y軸角速度 gyro_Pitch 原始数值
+                Data[6] = BinaryToFloat(Buffer[24], Buffer[25], Buffer[26], Buffer[27]);  // 繞Z軸角速度 gyro_Yaw 原始数值
+                Data[7] = BinaryToFloat(Buffer[28], Buffer[29], Buffer[30], Buffer[31]);  // X軸加速度 accel_x 原始数值
+                Data[8] = BinaryToFloat(Buffer[32], Buffer[33], Buffer[34], Buffer[35]);  // Y軸加速度 accel_y 原始数值
+                Data[9] = BinaryToFloat(Buffer[36], Buffer[37], Buffer[38], Buffer[39]);  // Z軸加速度 accel_z 原始数值
+                Data[10] = BinaryToFloat(Buffer[40], Buffer[41], Buffer[42], Buffer[43]); // Yaw Z轴角度
+                Data[11] = BinaryToFloat(Buffer[44], Buffer[45], Buffer[46], Buffer[47]); // 電池電壓              24-25   <24.3  low
+                Data[12] = BinaryToFloat(Buffer[48], Buffer[49], Buffer[50], Buffer[51]); // 紅色緊急開關位元0/1 運行/停止
+                Data[13] = BinaryToFloat(Buffer[52], Buffer[53], Buffer[54], Buffer[55]); // 起重電機編碼器原始數據（未轉換） 如果有需要可以添加發送指令去清0，上面的發送命令還有剩餘  gearrate 30  dt 5 ms
+                Data[14] = BinaryToFloat(Buffer[56], Buffer[57], Buffer[58], Buffer[59]); // 起重電機下行限位開關（用於校準） 1代表開關被壓住
+                Data[15] = BinaryToFloat(Buffer[60], Buffer[61], Buffer[62], Buffer[63]); // 起重電機上行限位開關（用於校準） 1代表開關被壓住
             }
             sum = 0;
             memset(Buffer, 0, sizeof(uint8_t) * 65);
@@ -234,6 +235,6 @@ void STM32Controller::ReciveData()
         AccelerationY = Data[8] / 2048;          // 转换            // if(Data1)
         AccelerationZ = Data[9] / 2048;
     }
-    STM32Controller::ClearBuffer();
-    STM32Controller::CloseBuffer();
+    ClearBuffer();
+    CloseBuffer();
 }
